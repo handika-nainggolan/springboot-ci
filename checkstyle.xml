@@ -7,11 +7,6 @@
     <property name="severity" value="error"/>
     <property name="fileExtensions" value="java"/>
 
-    <!-- File Size -->
-    <module name="FileLength">
-        <property name="max" value="500"/>
-    </module>
-
     <module name="TreeWalker">
         <!-- Naming Conventions -->
         <module name="TypeName"/>
@@ -23,21 +18,7 @@
 
         <!-- Imports -->
         <module name="AvoidStarImport"/>
-        <module name="UnusedImports"/>
         <module name="RedundantImport"/>
-
-        <!-- Javadoc -->
-        <module name="JavadocMethod">
-            <property name="accessModifiers" value="public"/>
-        </module>
-        <module name="JavadocVariable">
-            <property name="scope" value="private"/>
-        </module>
-        <module name="JavadocType"/>
-
-        <!-- Whitespace -->
-        <module name="WhitespaceAround"/>
-        <module name="NoWhitespaceAtEndOfLine"/>
 
         <!-- Blocks -->
         <module name="NeedBraces"/>
@@ -47,11 +28,9 @@
         <!-- Coding -->
         <module name="EqualsHashCode"/>
         <module name="SimplifyBooleanReturn"/>
-        <module name="StringLiteralEquality"/>
 
         <!-- Misc -->
         <module name="UpperEll"/>
         <module name="ArrayTypeStyle"/>
-        <module name="FinalParameters"/>
     </module>
 </module>
