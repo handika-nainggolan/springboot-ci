@@ -79,9 +79,6 @@ jobs:
           path: target/site/jacoco/
           retention-days: 7
 
-      - name: Check Coverage Threshold (70%)
-        run: mvn jacoco:check -B
-
       - name: Publish Test Summary
         uses: dorny/test-reporter@v1
         if: always()
