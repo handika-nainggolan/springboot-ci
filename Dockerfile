@@ -1,42 +1,41 @@
-# =============================================
+# ============================================
 # Stage 1: Build
-# =============================================
+# ============================================
 FROM maven:3.9.6-eclipse-temurin-17 AS builder
 
 WORKDIR /app
 
-# Copy pom.xml and download dependencies first (layer caching)
-COPY pom.xml .
-RUN mvn dependency:go-offline -B
+# Copy seluruh project
+COPY . .
 
-# Copy source code
-COPY src ./src
+# Build aplikasi (skip test karena sudah dijalankan di CI)
+RUN mvn clean package -DskipTests
 
-# Build the application (skip tests - tests run in CI)
-RUN mvn clean package -DskipTests -B
-
-# =============================================
-# Stage 2: Run
-# =============================================
+# ============================================
+# Stage 2: Runtime
+# ============================================
 FROM eclipse-temurin:17-jre-alpine
 
-# Security: run as non-root user
+# Buat user non-root
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 WORKDIR /app
 
-# Copy JAR from builder stage
+# Copy file JAR hasil build
 COPY --from=builder /app/target/*.jar app.jar
 
-# Change ownership
+# Ubah ownership file
 RUN chown appuser:appgroup app.jar
 
+# Gunakan user non-root
 USER appuser
 
+# Port aplikasi
 EXPOSE 8080
 
-# Health check
+# Healthcheck
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
     CMD wget -q --spider http://localhost:8080/actuator/health || exit 1
 
-ENTRYPOINT ["java", "-jar", "-Djava.security.egd=file:/dev/./urandom", "app.jar"]
+# Jalankan aplikasi
+ENTRYPOINT ["java","-jar","app.jar"]
