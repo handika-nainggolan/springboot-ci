@@ -9,6 +9,7 @@ springboot-ci/
 ├── .github/
 │   └── workflows/
 │       └── ci.yml              # ← CI Pipeline utama
+|             └── cd.yml        # ← CD Pipeline utama
 ├── src/
 │   ├── main/java/com/example/demo/
 │   │   ├── DemoApplication.java
